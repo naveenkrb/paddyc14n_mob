@@ -1,0 +1,7 @@
+{
+  "name": "paddyc14n_mob",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
