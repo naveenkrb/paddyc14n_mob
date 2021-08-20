@@ -1,0 +1,8 @@
+<ion-item [lines]="buttonDetail?'':'none'" [button]="buttonDetail" [detail]="buttonDetail">
+  <ion-note slot="end" class="ion-margin-end">
+    <ion-text>{{ season.startDate }}</ion-text><br>
+    <ion-text>{{ season.endDate }}</ion-text>
+  </ion-note>
+  <ion-label>{{ season.seasonName }}</ion-label>
+  <ion-label class="ion-text-end">{{ season.stateCode }}</ion-label>
+</ion-item>

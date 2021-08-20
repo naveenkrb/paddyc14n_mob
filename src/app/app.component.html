@@ -1,3 +1,64 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="m1" contentId="main-menu-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-item lines="none">
+          <ion-icon size="large" name="person-circle-outline">User</ion-icon>
+          <div class="ion-padding-start">
+            <ion-label>{{ userId }}</ion-label>
+            <ion-text color="tertiary">{{ currentLocation }}</ion-text>
+          </div>
+        </ion-item>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-menu-toggle>
+          <ion-item routerLink="/observation/switch-location">
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            <ion-label>Switch Farm Location</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item routerLink="/planning">
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>Plan Crops</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item routerLink="/observation">
+            <ion-icon name="eye-outline" slot="start"></ion-icon>
+            <ion-label>Record Observations</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item routerLink="/observation/synchronize-data">
+            <ion-icon name="sync-outline" slot="start"></ion-icon>
+            <ion-label>Synchronize Data</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item routerLink="/auth/forgot-password">
+            <ion-icon name="key-outline" slot="start"></ion-icon>
+            <ion-label>Forgot Password</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item (click)="logout()" button>
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-title size="small">
+          v{{ appVersion }}&copy;{{ orgName }}
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-menu>
+
+  <ion-router-outlet id="main-menu-content"></ion-router-outlet>
 </ion-app>

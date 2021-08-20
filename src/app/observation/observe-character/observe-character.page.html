@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Observe Character</ion-title>
+    <ion-title size="small">
+      <ion-text color="tertiary">{{ currentLocation }}</ion-text>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/observation"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="saveObservation(remarks.value)">
+        <ion-icon name="checkmark-done-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-season [season]="season"></app-season>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-crop [crop]="crop" [lines]="false"></app-crop>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-character [character]="character"></app-character>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="character.characterType === 'M'">
+      <ion-col size-md="6" offset-md="3">
+        <ion-item>
+          <ion-label position="floating">Enter Dimension</ion-label>
+          <ion-textarea maxlength="50" rows="2" (ionBlur)="setObservation(dimension.value)" #dimension required>
+          </ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="character.characterType === 'S'">
+      <ion-col size-md="6" offset-md="3">
+        <app-reading [readings]="character.characterReadings" (readingPick)="setObservation($event)"></app-reading>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-image-picker (imagePick)="onImagePicked($event)"></app-image-picker>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-item>
+          <ion-label position="floating">Remarks</ion-label>
+          <ion-textarea maxlength="50" rows="2" #remarks></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="captureObservationImage()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+ -->
+</ion-content>

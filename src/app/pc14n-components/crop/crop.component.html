@@ -1,0 +1,20 @@
+<ion-item [lines]="lines?'':'none'" [button]="buttonDetail" [detail]="buttonDetail">
+  <ion-avatar slot="end">
+    <ion-img [src]="crop.cropImage"></ion-img>
+  </ion-avatar>
+  <ion-label>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col>
+          <ion-text>
+            <h3>{{ crop.cropCode }}</h3>
+          </ion-text>
+          <p>{{ crop.cropName }}</p>
+        </ion-col>
+        <ion-col size="ion-auto" class="ion-align-self-center" *ngIf="emphasis">
+          <ion-icon name="checkmark-done-sharp" color="success"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-label>
+</ion-item>

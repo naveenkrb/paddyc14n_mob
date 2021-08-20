@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-radio-group #reading ngModel name="reading" (ionChange)="setReading(reading.value)">
+    <ion-item lines="none" *ngFor="let reading of readings">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="reading.readingImage"></ion-img>
+      </ion-thumbnail>
+      <ion-label>{{ reading.readingName }}</ion-label>
+      <ion-radio slot="end" [value]="reading.readingName"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Synchronize Data</ion-title>
+    <ion-menu-button slot="start"></ion-menu-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item-sliding *ngFor="let status of dataSyncStatus; trackBy: trackByDataKey" #slider>
+            <ion-item>
+              <div>
+                <ion-label>{{ status.dataName }}</ion-label>
+                <ion-note slot="end">{{ getLastSynchronized(status) }}</ion-note>
+              </div>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option>
+                <ion-icon name="sync-outline" slot="icon-only" (click)="synchronizeData(slider, status.dataKey)">
+                </ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

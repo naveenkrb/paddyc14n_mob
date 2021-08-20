@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crop Characters</ion-title>
+    <ion-title size="small">
+      <ion-text color="tertiary">{{ currentLocation }}</ion-text>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/observation"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-toggle title="Show updated characters" color="success" #characterToggle
+        (ionChange)="toggleCharacters(characterToggle.checked)">
+        <ion-label>Selected</ion-label>
+      </ion-toggle>
+      <ion-button type="button" shape="round" title="Clear Characters"
+        (click)="clearInputs(stage, characterFilter, characterToggle)">
+        <ion-icon name="remove-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-season [season]="season"></app-season>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-crop [crop]="crop" [lines]="false"></app-crop>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-item>
+          <ion-label position="floating">Stage</ion-label>
+          <ion-select placeholder="Select Stage ..." interface="alert" #stage (ionChange)="findCharacters(stage.value)">
+            <ion-select-option *ngFor="let stage of stages" [value]="stage[0]">
+              {{ stage[1] }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-searchbar placeholder="Character Code or Name" #characterFilter
+          (ionChange)="setCharacterFilter(characterFilter.value)">
+        </ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-list>
+          <ion-list-header>
+            <ion-label color="tertiary">
+              <h3>Characters</h3>
+            </ion-label>
+          </ion-list-header>
+          <div *ngIf="haveCharacters; else noCharacters">
+            <app-character *ngFor="let c of characters | keyvalue" [character]="c.value"
+              [routerLink]="['/','observation','observe-character',currentPlan.planId,crop.cropId,c.key]"
+              [buttonDetail]="true" [hasObservation]="isCharacterAlreadyObserved(c.key)">
+            </app-character>
+          </div>
+          <ng-template #noCharacters>
+            <ion-item lines="none" *ngIf="inSearch">
+              <ion-label>No Characters found</ion-label>
+            </ion-item>
+          </ng-template>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

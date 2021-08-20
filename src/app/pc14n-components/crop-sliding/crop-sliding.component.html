@@ -1,0 +1,11 @@
+<ion-item-sliding #cropSliding>
+  <app-crop [crop]="crop" [emphasis]="allowRemove"></app-crop>
+  <ion-item-options side="end">
+    <ion-item-option color="success" *ngIf="!allowRemove">
+      <ion-icon name="add-circle" slot="icon-only" (click)="clickAdd(cropSliding)"></ion-icon>
+    </ion-item-option>
+    <ion-item-option color="danger" *ngIf="allowRemove">
+      <ion-icon name="remove-circle" slot="icon-only" (click)="clickRemove(cropSliding)"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

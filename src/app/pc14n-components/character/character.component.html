@@ -1,0 +1,27 @@
+<ion-item [lines]="buttonDetail?'':'none'" [button]="buttonDetail" [detail]="buttonDetail">
+  <ion-label>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="8">
+          <h3>{{ character.characterCode }}</h3>
+        </ion-col>
+        <ion-col size="3">
+          <p>{{ getCharacterTypeDesc() }}</p>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-center">
+          <ion-icon *ngIf="buttonDetail" [name]="hasObservation?'checkmark-outline':'close-outline'"
+            [color]="hasObservation?'success':'danger'">
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <p>{{ character.characterName }}</p>
+        </ion-col>
+        <ion-col size="4">
+          <p>{{ getCharacterStageDesc() }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-label>
+</ion-item>

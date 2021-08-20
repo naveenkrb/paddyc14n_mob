@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Planned Crops</ion-title>
+    <ion-title size="small">
+      <ion-text color="tertiary">{{ currentLocation }}</ion-text>
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/observation"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-season [season]="season"></app-season>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-searchbar placeholder="Crop Code or Name" #cropFilter (ionChange)="setCropFilter(cropFilter.value)">
+        </ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-list>
+          <app-crop *ngFor="let c of crops | keyvalue" [crop]="c.value"
+            [routerLink]="['/','observation','crop-characters', currentPlan.planId ,c.key]" [buttonDetail]="true">
+          </app-crop>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
