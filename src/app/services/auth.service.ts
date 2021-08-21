@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceBase } from './service-base';
 import { ServiceUrl } from '../common/service-url';
@@ -8,6 +7,7 @@ import { UserProfile } from '../data/user-profile';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { StorageKeys } from '../common/storage-keys';
+import { HttpProvider } from '../common/http-provider';
 
 interface AuthData {
   user: string;
@@ -23,7 +23,7 @@ export class AuthService extends ServiceBase {
   private _location: string;
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
   }

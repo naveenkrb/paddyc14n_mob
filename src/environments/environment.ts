@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  serviceBaseUrl: 'http://localhost:8080/farmer',
+  //serviceBaseUrl: 'http://localhost:8080/farmer',
+  serviceBaseUrl: 'https://192.168.1.28/farmer',
 };
 
 /*

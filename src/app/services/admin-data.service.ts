@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, empty, of } from 'rxjs';
 import { catchError, count, reduce, tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
 import { CharacterData, CharacterService } from './character.service';
@@ -21,7 +20,7 @@ interface AdminData {
 export class AdminDataService extends ServiceBase {
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private seasonService: SeasonService,
     private cropService: CropService,
     private characterService: CharacterService,

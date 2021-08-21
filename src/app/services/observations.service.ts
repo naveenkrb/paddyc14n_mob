@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
@@ -12,6 +11,7 @@ import { FieldError } from '../common/field-error';
 import { PlanningService } from './planning.service';
 import { ServiceResponse } from '../data/service-response';
 import { catchError, tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 
 interface ObservationData {
   observationId?: number;
@@ -43,7 +43,7 @@ export class ObservationsService extends ServiceBase {
   constructor(
     private cropService: CropService,
     private planningService: PlanningService,
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
     this._observations = [];

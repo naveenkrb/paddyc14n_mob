@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
@@ -7,6 +6,7 @@ import { Season } from '../data/season';
 import { StorageService } from './storage.service';
 import { ServiceBase } from './service-base';
 import { tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 
 export interface SeasonData {
   seasonId: string;
@@ -26,7 +26,7 @@ export class SeasonService extends ServiceBase {
   private _seasons: Map<string, Season>;
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
     this._seasons = new Map<string, Season>();

@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
@@ -7,6 +6,7 @@ import { ReferenceData } from '../data/reference-data';
 import { StorageService } from './storage.service';
 import { ServiceBase } from './service-base';
 import { tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 
 export interface ReferenceDataData {
   id: number;
@@ -23,7 +23,7 @@ export class ReferenceDataService extends ServiceBase {
   private _isLoaded = false;
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
     this._referenceData = [];

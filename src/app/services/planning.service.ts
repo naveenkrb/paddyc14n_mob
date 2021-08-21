@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
@@ -11,6 +10,7 @@ import { ServiceBase } from './service-base';
 import { ServiceResponse } from '../data/service-response';
 import { catchError, tap } from 'rxjs/operators';
 import { FieldError } from '../common/field-error';
+import { HttpProvider } from '../common/http-provider';
 
 interface PlanData {
   planId?: number;
@@ -36,7 +36,7 @@ export class PlanningService extends ServiceBase {
   constructor(
     private seasonService: SeasonService,
     private authService: AuthService,
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
     this._plans = [];

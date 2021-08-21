@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceUrl } from '../common/service-url';
 import { Character } from '../data/character';
@@ -8,6 +7,7 @@ import { StorageService } from './storage.service';
 import { ServiceBase } from './service-base';
 import { StorageKeys } from '../common/storage-keys';
 import { tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 
 export interface CharacterData {
   characterId: string;
@@ -27,7 +27,7 @@ export class CharacterService extends ServiceBase {
   private _characters: Map<number, Character>;
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private storageService: StorageService) {
     super();
     this._characters = new Map<number, Character>();

@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
+import { HttpProvider } from './common/http-provider';
+import { HttpNgProvider } from './common/http-ng-provider';
+import { HttpNativeProvider } from './common/http-native-provider';
 import { httpInterceptorProviders } from './common/http-interceptors';
 import { HTTP } from '@ionic-native/http/ngx';
 
@@ -19,7 +22,8 @@ import { HTTP } from '@ionic-native/http/ngx';
     name: 'pc14n',
     driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]
   }), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, httpInterceptorProviders, HTTP],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    HttpProvider, HttpNgProvider, HttpNativeProvider, HTTP, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

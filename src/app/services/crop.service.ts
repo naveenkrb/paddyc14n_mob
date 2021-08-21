@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReferenceDataService } from './reference-data.service';
 import { ServiceBase } from './service-base';
@@ -8,6 +7,7 @@ import { ServiceUrl } from '../common/service-url';
 import { StorageService } from './storage.service';
 import { StorageKeys } from '../common/storage-keys';
 import { tap } from 'rxjs/operators';
+import { HttpProvider } from '../common/http-provider';
 
 export interface CropData {
   cropId: string;
@@ -25,7 +25,7 @@ export class CropService extends ServiceBase {
   private _crops: Map<number, Crop>;
 
   constructor(
-    private http: HttpClient,
+    private http: HttpProvider,
     private refDataService: ReferenceDataService,
     private storageService: StorageService) {
     super();
