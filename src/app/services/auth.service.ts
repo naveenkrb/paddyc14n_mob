@@ -11,7 +11,7 @@ import { HttpProvider } from '../common/http-provider';
 
 interface AuthData {
   user: string;
-  password: string;
+  password?: string;
 }
 
 @Injectable({
@@ -63,8 +63,31 @@ export class AuthService extends ServiceBase {
 
   logout() {
     return this.http
-      .get<ServiceResponse<UserProfile>>(
+      .get<ServiceResponse<any>>(
         this.getServiceUrl(ServiceUrl.logout))
+      .pipe(
+        catchError(error => {
+          throw error;
+        }),
+        tap(response => {
+          if (this.hasNoError(response)) {
+            this._userProfile = null;
+            this.currentLocation = null;
+            this._loggedIn = false;
+
+            this.storageService.remove(StorageKeys.userProfile);
+          }
+        })
+      );
+  }
+
+  forgotPassword(uid: string) {
+    const requestData: AuthData = { user: uid };
+
+    return this.http
+      .post<ServiceResponse<any>>(
+        this.getServiceUrl(ServiceUrl.forgotPassword),
+        requestData)
       .pipe(
         catchError(error => {
           throw error;

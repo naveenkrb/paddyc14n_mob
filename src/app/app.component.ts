@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 import { AppConfig } from './common/app-config';
 import { ResultCode } from './common/result-code';
 import { AuthService } from './services/auth.service';
@@ -32,7 +33,7 @@ export class AppComponent {
   }
 
   get appVersion() {
-    return AppConfig.appVersion.valueOf();
+    return AppConfig.appVersion.valueOf() + (environment.production ? '' : 'd');
   }
 
   get orgName() {

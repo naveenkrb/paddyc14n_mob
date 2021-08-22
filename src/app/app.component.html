@@ -38,12 +38,6 @@
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item routerLink="/auth/forgot-password">
-            <ion-icon name="key-outline" slot="start"></ion-icon>
-            <ion-label>Forgot Password</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle>
           <ion-item (click)="logout()" button>
             <ion-icon name="log-out-outline" slot="start"></ion-icon>
             <ion-label>Logout</ion-label>
@@ -54,7 +48,7 @@
     <ion-footer>
       <ion-toolbar>
         <ion-title size="small">
-          v{{ appVersion }}&copy;{{ orgName }}
+          v{{ appVersion }} &copy; {{ orgName }}
         </ion-title>
       </ion-toolbar>
     </ion-footer>
