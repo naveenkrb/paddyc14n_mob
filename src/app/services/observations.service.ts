@@ -21,8 +21,8 @@ interface ObservationData {
   cropId: number;
   characterId: number;
   observation: string;
-  observationImage: string;
-  observationImageMimeType: string;
+  observationImage?: string;
+  observationImageMimeType?: string;
   remarks?: string;
   recordedAt?: number;
   wipId?: string;

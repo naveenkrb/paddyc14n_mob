@@ -133,7 +133,11 @@ export class ObserveCharacterPage implements OnInit {
   }
 
   private isValidObservation(observation: Observation): boolean {
-    if (!observation.observation || !observation.observationImage) {
+    if (!observation.observation) {
+      return false;
+    }
+
+    if (this._character.captureImage && !observation.observationImage) {
       return false;
     }
 
@@ -141,7 +145,7 @@ export class ObserveCharacterPage implements OnInit {
       return false;
     }
 
-    if (observation.observationImage.length <= 0) {
+    if (this._character.captureImage && observation.observationImage.length <= 0) {
       return false;
     }
 

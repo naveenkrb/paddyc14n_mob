@@ -35,7 +35,7 @@ export class StorageService {
   }
 
   public get(key: StorageKeys): any {
-    this._storage?.get(key.valueOf()).then(value => value);
+    return this._storage?.get(key.valueOf()).then(value => value);
   }
 
   public getAge(key: StorageKeys) {

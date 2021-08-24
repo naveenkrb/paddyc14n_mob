@@ -7,4 +7,5 @@ export class Character {
   characterStage: string;
   characterType: string;
   characterReadings?: Reading[];
+  captureImage: boolean;
 }

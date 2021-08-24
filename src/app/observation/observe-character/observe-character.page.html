@@ -46,7 +46,7 @@
         <app-reading [readings]="character.characterReadings" (readingPick)="setObservation($event)"></app-reading>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="character.captureImage">
       <ion-col size-md="6" offset-md="3">
         <app-image-picker (imagePick)="onImagePicked($event)"></app-image-picker>
       </ion-col>
@@ -60,10 +60,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!--   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="captureObservationImage()">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
- -->
 </ion-content>

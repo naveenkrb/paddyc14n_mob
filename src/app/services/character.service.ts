@@ -18,6 +18,7 @@ export interface CharacterData {
   readingName?: string[];
   readingImage?: string[];
   readingImageMimeType?: string[];
+  captureImage: string;
 }
 
 @Injectable({
@@ -75,6 +76,7 @@ export class CharacterService extends ServiceBase {
     character.characterName = data.characterName;
     character.characterStage = data.characterStage;
     character.characterType = data.characterType;
+    character.captureImage = +data.captureImage === 1;
 
     if (character.characterType === 'S') {
       character.characterReadings = [];
