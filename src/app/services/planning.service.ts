@@ -12,7 +12,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { FieldError } from '../common/field-error';
 import { HttpProvider } from '../common/http-provider';
 
-interface PlanData {
+export interface PlanData {
   planId?: number;
   location: string;
   seasonCode: string;
@@ -40,7 +40,6 @@ export class PlanningService extends ServiceBase {
     private storageService: StorageService) {
     super();
     this._plans = [];
-    this.fetchPlans();
   }
 
   initializeData(data: PlanData[] = null) {
@@ -121,6 +120,20 @@ export class PlanningService extends ServiceBase {
     this.storageService.set(StorageKeys.plans, this._plans);
   }
 
+  synchronizePlanData() {
+    return this.http
+      .get<PlanData[]>(this.getServiceUrl(ServiceUrl.planData))
+      .pipe(
+        tap(
+          data => this.initializeData(data),
+          error => {
+            this.initializeData();
+            throw error;
+          }
+        )
+      );
+  }
+
   private getPlanFromData(data: PlanData) {
     const plan = new CropPlan(data.location, this.seasonService.find(data.seasonCode), +data.planId);
     // This is Important, to cast the input cropIds from string to number
@@ -136,17 +149,6 @@ export class PlanningService extends ServiceBase {
       cropId: plan.crops,
       wipId: plan.wipId
     };
-  }
-
-  private fetchPlans() {
-    this.http
-      .get<PlanData[]>(this.getServiceUrl(ServiceUrl.planData))
-      .subscribe(
-        data => this.initializeData(data),
-        error => {
-          console.log(error);
-          this.initializeData();
-        });
   }
 
   private savePlans() {

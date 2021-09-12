@@ -15,6 +15,7 @@ import { ImageData } from 'src/app/pc14n-components/image-picker/image-picker.co
 import { v4 as uuid } from 'uuid';
 import { Crop } from 'src/app/data/crop';
 import { Character } from 'src/app/data/character';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-observe-character',

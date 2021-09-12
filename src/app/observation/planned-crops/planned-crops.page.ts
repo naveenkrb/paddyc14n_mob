@@ -38,9 +38,6 @@ export class PlannedCropsPage implements OnInit {
     });
   }
 
-  ionViewWillEnter() {
-  }
-
   get currentPlan() {
     return this._currentPlan;
   }

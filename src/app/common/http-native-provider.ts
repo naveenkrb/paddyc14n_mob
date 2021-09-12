@@ -8,8 +8,17 @@ export class HttpNativeProvider {
     http.setServerTrustMode('nocheck').then(() => {
       console.log('pc14n server trust mode set');
     }, () => {
-      console.log('pc14n server trust mode could not be set');
+      console.log('pc14n server tletrust mode could not be set');
     });
+  }
+
+  public getImageUrl(url: string) {
+    this.http.setRequestTimeout(10);
+    let dataUrl = url;
+    this.http.getSync(url, {}, {},
+      result => dataUrl = ('data:' + result.data.mimeType + ';base64,' + result.data.data),
+      error => console.log(error));
+    return dataUrl;
   }
 
   public get<T>(url: string, params?: any, options: any = {}) {

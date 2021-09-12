@@ -1,0 +1,14 @@
+<ion-slides [pager]="true">
+  <ion-slide *ngFor="let observation of observations; trackBy: observationTrackBy">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{observation.observation}}</ion-card-title>
+        <ion-card-subtitle>{{getRecordedAtFromObservation(observation)}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>{{observation.remarks}}</ion-card-content>
+      <ion-img [src]="getUrlFromObservation(observation)" alt="Loading observation image...">
+      </ion-img>
+      <!--img src="{{getUrlFromObservation(observation)}}" class="image"-->
+    </ion-card>
+  </ion-slide>
+</ion-slides>

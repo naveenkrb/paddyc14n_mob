@@ -7,15 +7,30 @@ import { SeasonComponent } from './season/season.component';
 import { CharacterComponent } from './character/character.component';
 import { ReadingComponent } from './reading/reading.component';
 import { ImagePickerComponent } from './image-picker/image-picker.component';
-
-
+import { ObservationsComponent } from './observations/observations.component';
 
 @NgModule({
-  declarations: [CropComponent, CropSlidingComponent, SeasonComponent, CharacterComponent, ReadingComponent, ImagePickerComponent],
+  declarations: [
+    CropComponent,
+    CropSlidingComponent,
+    SeasonComponent,
+    ReadingComponent,
+    ImagePickerComponent,
+    CharacterComponent,
+    ObservationsComponent
+  ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
   ],
-  exports: [CropComponent, CropSlidingComponent, SeasonComponent, CharacterComponent, ReadingComponent, ImagePickerComponent]
+  exports: [
+    CropComponent,
+    CropSlidingComponent,
+    SeasonComponent,
+    CharacterComponent,
+    ReadingComponent,
+    ImagePickerComponent,
+    ObservationsComponent
+  ]
 })
 export class Pc14nComponentsModule { }

@@ -5,13 +5,15 @@ import { ServiceUrl } from '../common/service-url';
 import { StorageKeys } from '../common/storage-keys';
 import { CharacterData, CharacterService } from './character.service';
 import { CropData, CropService } from './crop.service';
+import { ObservationData, ObservationsService } from './observations.service';
+import { PlanData, PlanningService } from './planning.service';
 import { ReferenceDataData, ReferenceDataService } from './reference-data.service';
 import { SeasonData, SeasonService } from './season.service';
 import { ServiceBase } from './service-base';
 
 interface AdminData {
   type: StorageKeys;
-  data: SeasonData[] | CropData[] | CharacterData[] | ReferenceDataData[];
+  data: SeasonData[] | CropData[] | CharacterData[] | ReferenceDataData[] | PlanData[] | ObservationData[];
 }
 
 @Injectable({
@@ -24,7 +26,9 @@ export class AdminDataService extends ServiceBase {
     private seasonService: SeasonService,
     private cropService: CropService,
     private characterService: CharacterService,
-    private refDataService: ReferenceDataService
+    private refDataService: ReferenceDataService,
+    private planningService: PlanningService,
+    private observationService: ObservationsService
   ) {
     super();
   }
@@ -38,12 +42,16 @@ export class AdminDataService extends ServiceBase {
             this.seasonService.initializeData();
             this.cropService.initializeData();
             this.characterService.initializeData();
+            this.planningService.initializeData();
+            this.observationService.initializeData();
             throw error;
           }),
         tap(
           data => {
+            // Need to initialize ref data service before others
             this.refDataService.initializeData(
               this.getDataOfType(data, StorageKeys.referenceData) as ReferenceDataData[]);
+
             data.forEach(
               d => {
                 switch (d.type) {
@@ -58,6 +66,20 @@ export class AdminDataService extends ServiceBase {
                     break;
                 }
               });
+
+            // Initialize after Admin data is initialized
+            data.forEach(
+              d => {
+                switch (d.type) {
+                  case StorageKeys.plans:
+                    this.planningService.initializeData(d.data as PlanData[]);
+                    break;
+                  case StorageKeys.observations:
+                    this.observationService.initializeData(d.data as ObservationData[]);
+                    break;
+                }
+              });
+
           })
       );
   }

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DoCheck, LOCALE_ID, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, IonItemSliding, LoadingController } from '@ionic/angular';
 import { Observable, of, Subscription } from 'rxjs';
 import { StorageKeys } from 'src/app/common/storage-keys';
@@ -8,6 +9,8 @@ import { AdminDataService } from 'src/app/services/admin-data.service';
 import { CharacterService } from 'src/app/services/character.service';
 import { CropService } from 'src/app/services/crop.service';
 import { DataSynchronizeService, DataSyncStatus } from 'src/app/services/data-synchronize.service';
+import { ObservationsService } from 'src/app/services/observations.service';
+import { PlanningService } from 'src/app/services/planning.service';
 import { ReferenceDataService } from 'src/app/services/reference-data.service';
 import { SeasonService } from 'src/app/services/season.service';
 
@@ -26,9 +29,12 @@ export class SynchronizeDataPage implements OnInit, OnDestroy, DoCheck {
     private cropService: CropService,
     private characterService: CharacterService,
     private referenceDataService: ReferenceDataService,
+    private planningService: PlanningService,
+    private observationService: ObservationsService,
     private dataSyncService: DataSynchronizeService,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -95,6 +101,13 @@ export class SynchronizeDataPage implements OnInit, OnDestroy, DoCheck {
           case StorageKeys.referenceData:
             observable = this.referenceDataService.synchronizeReferenceData();
             break;
+          case StorageKeys.plans:
+            observable = this.planningService.synchronizePlanData();
+            break;
+          case StorageKeys.observations:
+            observable = this.observationService.synchronizeObservationData();
+            break;
+
         }
         observable
           .subscribe(
@@ -127,6 +140,7 @@ export class SynchronizeDataPage implements OnInit, OnDestroy, DoCheck {
             () => {
               le.dismiss();
               this.dataSyncService.updateDataSynchStatus();
+              this.router.navigateByUrl('/observation');
             },
             error => {
               le.dismiss();
@@ -134,7 +148,7 @@ export class SynchronizeDataPage implements OnInit, OnDestroy, DoCheck {
               if (error instanceof HttpErrorResponse) {
                 this.showAlert((error as HttpErrorResponse).error);
               } else {
-                this.showAlert('Technical Error');
+                this.showAlert('Technical Error, Please synchronize manually before proceeding');
               }
             });
       });

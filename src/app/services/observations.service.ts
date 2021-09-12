@@ -10,10 +10,11 @@ import { ServiceBase } from './service-base';
 import { FieldError } from '../common/field-error';
 import { PlanningService } from './planning.service';
 import { ServiceResponse } from '../data/service-response';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, take, tap, timeout } from 'rxjs/operators';
 import { HttpProvider } from '../common/http-provider';
+import { LoadingController } from '@ionic/angular';
 
-interface ObservationData {
+export interface ObservationData {
   observationId?: number;
   planId: number;
   location: string;
@@ -34,6 +35,10 @@ interface ObservationResponseData {
   errors?: FieldError[];
 }
 
+interface ObservationImageData {
+  mimeType: string;
+  base64Image: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -44,10 +49,11 @@ export class ObservationsService extends ServiceBase {
     private cropService: CropService,
     private planningService: PlanningService,
     private http: HttpProvider,
-    private storageService: StorageService) {
+    private storageService: StorageService,
+    private loadingController: LoadingController
+  ) {
     super();
     this._observations = [];
-    this.fetchObservations();
   }
 
   initializeData(data: ObservationData[] = null) {
@@ -96,7 +102,7 @@ export class ObservationsService extends ServiceBase {
 
   findObservationsIndex(planId: number, cropId: number, createIfNotFound = false) {
     let index = this._observations.findIndex(o =>
-      o.planId &&
+      o.planId === planId &&
       o.crop.cropId === cropId
     );
 
@@ -115,6 +121,41 @@ export class ObservationsService extends ServiceBase {
     this.storageService.set(StorageKeys.observations, this._observations);
   }
 
+  fetchObservations(planId: number, cropId: number, characterId: number) {
+    const url = this.getServiceUrl(ServiceUrl.observationData)
+      + '/' + planId + '/' + cropId + '/' + characterId;
+    return this.http.get<ObservationData[]>(
+      url
+    ).pipe(
+      catchError(error => {
+        throw error;
+      }),
+      map(response => (response as ObservationData[]).map(d => this.getObservationFromData(d)))
+    );
+  }
+
+  getObservationImageUrl(observation: Observation) {
+    const url = this.getServiceUrl(ServiceUrl.observationImage) + '/' + observation.observationId;
+    console.log('src url = ' + url);
+    const imageUrl = this.http.getImageUrl(url);
+    console.log('target url = ' + imageUrl);
+    return imageUrl;
+  }
+
+  synchronizeObservationData() {
+    return this.http
+      .get<ObservationData[]>(this.getServiceUrl(ServiceUrl.latestObservationData))
+      .pipe(
+        tap(
+          data => this.initializeData(data),
+          error => {
+            this.initializeData();
+            throw error;
+          }
+        )
+      );
+  }
+
   private getObservationFromData(data: ObservationData) {
     const observation = new Observation();
     observation.observationId = +data.observationId;
@@ -124,7 +165,7 @@ export class ObservationsService extends ServiceBase {
     observation.observationImage = data.observationImage;
     observation.observationImageMimeType = data.observationImageMimeType;
     observation.remarks = data.remarks;
-    observation.recordedAt = new Date(data.recordedAt);
+    observation.recordedAt = new Date(data.recordedAt * 1000);
 
     return observation;
   }
@@ -143,19 +184,8 @@ export class ObservationsService extends ServiceBase {
       observationImage: observation.observationImage,
       observationImageMimeType: observation.observationImageMimeType,
       remarks: observation.remarks,
-      recordedAt: observation.recordedAt.valueOf() / 1000
+      recordedAt: Math.floor(observation.recordedAt.getTime() / 1000.0)
     };
-  }
-
-  private fetchObservations() {
-    this.http
-      .get<ObservationData[]>(this.getServiceUrl(ServiceUrl.observationData))
-      .subscribe(
-        data => this.initializeData(data),
-        error => {
-          console.log(error);
-          this.initializeData();
-        });
   }
 
   private saveObservations() {

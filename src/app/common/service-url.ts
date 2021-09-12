@@ -9,6 +9,8 @@ export enum ServiceUrl {
   characterData = 'data/characters',
   planData = 'data/plans',
   observationData = 'data/observations',
+  latestObservationData = 'data/latestObservations',
+  observationImage = 'observation/image',
   referenceData = 'data/referenceData',
   adminData = 'data/admin',
   // Plan action URLs

@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './observation.page.html',
   styleUrls: ['./observation.page.scss'],
 })
-export class ObservationPage implements OnInit, DoCheck {
+export class ObservationPage implements OnInit {
   private _activeSeasons: CropPlan[];
 
   constructor(
@@ -20,7 +20,7 @@ export class ObservationPage implements OnInit, DoCheck {
   ngOnInit() {
   }
 
-  ngDoCheck(){
+  ionViewDidEnter() {
     this._activeSeasons = this.planningService.findPlansByLocation(this.currentLocation);
   }
 

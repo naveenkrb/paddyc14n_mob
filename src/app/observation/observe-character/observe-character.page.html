@@ -32,6 +32,12 @@
         <app-character [character]="character"></app-character>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <app-observations [planId]="currentPlan.planId" [cropId]="crop.cropId" [characterId]="character.characterId">
+        </app-observations>
+      </ion-col>
+    </ion-row>
     <ion-row *ngIf="character.characterType === 'M'">
       <ion-col size-md="6" offset-md="3">
         <ion-item>

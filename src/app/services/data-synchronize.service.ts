@@ -19,12 +19,12 @@ export class DataSynchronizeService {
     { dataName: 'Crops', dataKey: StorageKeys.crops },
     { dataName: 'Characters', dataKey: StorageKeys.characters },
     { dataName: 'Reference Data', dataKey: StorageKeys.referenceData },
+    { dataName: 'Plans', dataKey: StorageKeys.plans },
+    { dataName: 'Latest Observations', dataKey: StorageKeys.observations },
   ];
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   dataSyncStatus = new BehaviorSubject<DataSyncStatus[]>([...this._dataSyncItems]);
-
-  private _dataSyncStatus: DataSyncStatus[];
 
   constructor(
     private storageService: StorageService,

@@ -26,8 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'synchronize-data',
-    loadChildren: () => import('./synchronize-data/synchronize-data.module').then( m => m.SynchronizeDataPageModule)
-  }
+    loadChildren: () => import('./synchronize-data/synchronize-data.module').then(m => m.SynchronizeDataPageModule)
+  },
 ];
 
 @NgModule({
