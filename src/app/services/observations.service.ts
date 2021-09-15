@@ -35,9 +35,9 @@ interface ObservationResponseData {
   errors?: FieldError[];
 }
 
-interface ObservationImageData {
+export interface ObservationImageData {
   mimeType: string;
-  base64Image: string;
+  data: string;
 }
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,6 @@ export class ObservationsService extends ServiceBase {
     private planningService: PlanningService,
     private http: HttpProvider,
     private storageService: StorageService,
-    private loadingController: LoadingController
   ) {
     super();
     this._observations = [];
@@ -135,11 +134,7 @@ export class ObservationsService extends ServiceBase {
   }
 
   getObservationImageUrl(observation: Observation) {
-    const url = this.getServiceUrl(ServiceUrl.observationImage) + '/' + observation.observationId;
-    console.log('src url = ' + url);
-    const imageUrl = this.http.getImageUrl(url);
-    console.log('target url = ' + imageUrl);
-    return imageUrl;
+    return this.getServiceUrl(ServiceUrl.observationImage) + '/' + observation.observationId;
   }
 
   synchronizeObservationData() {

@@ -23,6 +23,7 @@ export class HttpProvider {
 
   public getImageUrl(url: string) {
     if (this.isNative) {
+      console.log('Fetching native image url');
       return this.nativeHttp.getImageUrl(url);
     } else {
       return url;

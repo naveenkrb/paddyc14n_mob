@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+  <debug-overrides>
+    <trust-anchors>
+      <certificates src="@raw/pc14n_dev_new"/>
+    </trust-anchors>
+  </debug-overrides>
   <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">localhost</domain> <!-- Debug port -->
     <domain includeSubdomains="true">10.0.2.2</domain> <!-- Debug port -->
     <domain includeSubdomains="true">10.0.3.2</domain> <!-- Debug port -->
     <domain includeSubdomains="true">192.168.1.28</domain> <!-- Debug port -->
+  </domain-config>
+  <domain-config>
+    <domain includeSubdomains="true">159.65.154.44</domain>
+    <trust-anchors>
+      <certificates src="@raw/pc14n_prd"/>
+    </trust-anchors>
   </domain-config>
 </network-security-config>

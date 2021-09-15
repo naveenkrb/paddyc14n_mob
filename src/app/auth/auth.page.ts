@@ -25,12 +25,10 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
-  }
-
   login(f: NgForm) {
     if (this.authService.isLoggedIn) {
       console.log('Alreay logged in');
+      this.router.navigateByUrl('/observation');
       return;
     }
 
